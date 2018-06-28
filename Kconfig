@@ -1,128 +1,113 @@
 #
-# Synaptics DSX touchscreen driver configuration
+# Synaptics TCM touchscreen driver configuration
 #
-menuconfig TOUCHSCREEN_SYNAPTICS_DSX
-	bool "Synaptics DSX touchscreen"
+menuconfig TOUCHSCREEN_SYNAPTICS_TCM
+	bool "Synaptics TCM touchscreen"
 	default y
 	help
-	  Say Y here if you have a Synaptics DSX touchscreen connected
+	  Say Y here if you have a Synaptics TCM touchscreen connected
 	  to your system.
 
 	  If unsure, say N.
 
-if TOUCHSCREEN_SYNAPTICS_DSX
+if TOUCHSCREEN_SYNAPTICS_TCM
 
 choice
-	default TOUCHSCREEN_SYNAPTICS_DSX_I2C
-	prompt "Synaptics DSX bus interface"
-config TOUCHSCREEN_SYNAPTICS_DSX_I2C
-	tristate "RMI over I2C"
+	default TOUCHSCREEN_SYNAPTICS_TCM_I2C
+	prompt "Synaptics TCM bus module"
+config TOUCHSCREEN_SYNAPTICS_TCM_I2C
+	bool "I2C"
 	depends on I2C
-config TOUCHSCREEN_SYNAPTICS_DSX_SPI
-	tristate "RMI over SPI"
+config TOUCHSCREEN_SYNAPTICS_TCM_SPI
+	bool "SPI"
 	depends on SPI_MASTER
-config TOUCHSCREEN_SYNAPTICS_DSX_RMI_HID_I2C
-	tristate "HID over I2C"
-	depends on I2C
 endchoice
 
-config TOUCHSCREEN_SYNAPTICS_DSX_CORE
-	tristate "Synaptics DSX core driver module"
+config TOUCHSCREEN_SYNAPTICS_TCM_CORE
+	tristate "Synaptics TCM core module"
 	depends on I2C || SPI_MASTER
 	help
-	  Say Y here to enable basic touch reporting functionality.
+	  Say Y here to enable core functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_core.
+	  module will be called synaptics_tcm_core.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_RMI_DEV
-	tristate "Synaptics DSX RMI device module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_TOUCH
+	tristate "Synaptics TCM touch module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for direct RMI register access.
+	  Say Y here to enable support for touch reporting.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_rmi_dev.
+	  module will be called synaptics_tcm_touch.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_FW_UPDATE
-	tristate "Synaptics DSX firmware update module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_DEVICE
+	tristate "Synaptics TCM device module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for doing firmware update.
+	  Say Y here to enable support for TCM device functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_fw_update.
+	  module will be called synaptics_tcm_device.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_TEST_REPORTING
-	tristate "Synaptics DSX test reporting module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_TESTING
+	tristate "Synaptics TCM testing module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for retrieving production test reports.
+	  Say Y here to enable support for testing functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_test_reporting.
+	  module will be called synaptics_tcm_testing.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_PROXIMITY
-	tristate "Synaptics DSX proximity module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_REFLASH
+	tristate "Synaptics TCM reflash module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for proximity functionality.
+	  Say Y here to enable support for reflash functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_proximity.
+	  module will be called synaptics_tcm_reflash.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_ACTIVE_PEN
-	tristate "Synaptics DSX active pen module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_RECOVERY
+	tristate "Synaptics TCM recovery module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for active pen functionality.
+	  Say Y here to enable support for recovery functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_active_pen.
+	  module will be called synaptics_tcm_recovery.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_GESTURE
-	tristate "Synaptics DSX user defined gesture module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_ZEROFLASH
+	tristate "Synaptics TCM zeroflash module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for user defined gesture functionality.
+	  Say Y here to enable support for ZeroFlash functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_gesture.
+	  module will be called synaptics_tcm_zeroflash.
 
-config TOUCHSCREEN_SYNAPTICS_DSX_VIDEO
-	tristate "Synaptics DSX video module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
+config TOUCHSCREEN_SYNAPTICS_TCM_DIAGNOSTICS
+	tristate "Synaptics TCM diagnostics module"
+	depends on TOUCHSCREEN_SYNAPTICS_TCM_CORE
 	help
-	  Say Y here to enable support for video communication functionality.
+	  Say Y here to enable support for diagnostics functionality.
 
 	  If unsure, say N.
 
 	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_video.
-
-config TOUCHSCREEN_SYNAPTICS_DSX_DEBUG
-	tristate "Synaptics DSX debug module"
-	depends on TOUCHSCREEN_SYNAPTICS_DSX_CORE
-	help
-	  Say Y here to enable support for firmware debug functionality.
-
-	  If unsure, say N.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called synaptics_dsx_debug.
-
+	  module will be called synaptics_tcm_diagnostics.
 endif
